@@ -6,3 +6,7 @@ export async function createUser(username, password) {
     return sql.rows[0]
 }
 
+export async function findUsername(username) {
+    const sql = await client.query(`SELECT * FROM users WHERE username = $1`, [username])
+    return sql.rows[0]
+}

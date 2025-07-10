@@ -200,18 +200,20 @@
 //   }
 // ];
 const express = require('express');
-const cors = require('cors');
-const app = express();
+// const cors = require('cors');
+// const app = express();
+import client from '../db/client';
+export default router;
 
 const recipes = require('./recipes');
 
-app.use(cors());
-app.use(express.json());
+// app.use(cors());
+// app.use(express.json());
 
 
-app.get('/recipes', async (req, res) => {
+router.get('/recipes', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM recipes');
+    const result = await client.query('SELECT * FROM recipes');
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -220,10 +222,10 @@ app.get('/recipes', async (req, res) => {
 
 
 
-app.get('/recipes/:mood', async (req, res) => {
+router.get('/recipes/:mood', async (req, res) => {
   const { mood } = req.params;
   try {
-    const result = await pool.query(
+    const result = await client.query(
       'SELECT * FROM recipes WHERE mood = $1',
       [mood.toLowerCase()]
     );
