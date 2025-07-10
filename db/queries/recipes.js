@@ -22,7 +22,7 @@ export async function getAllRecipes() {
 
 
 export async function getRecipesByMood(emotion) {
-  const result = await client.query('SELECT recipes.* FROM recipes JOIN moods ON recipes.mood_id = moods.id WHERE moods.emotion = $1;', [emotion]);
+  const result = await client.query('SELECT * FROM recipes WHERE emotion = $1', [emotion]);
   return result.rows;
 };
 
